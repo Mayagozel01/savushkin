@@ -1,0 +1,13 @@
+.banner{
+     background-color: #fbf5ee;
+}
+
+.hero-section h2{
+    font-family: 'GreatVibes', cursive;;
+}
+.hero-bg{
+    background-image: url("./../../assets/images/hero-1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('./assets/css/fonts.css');
+@import url('assets/fonts/great-vibes-text/great-vibes.css');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    font-size: 100%;
+}
+
+
+@media (max-width: 640px) { /* Tailwind’s sm breakpoint */
+  html {
+    font-size: 50%; /* 8px = 1rem */
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 43.75%; /* 7px = 1rem */
+  }
+}
+
+body {
+  font-family: 'Brandon Text', sans-serif;
+  background-color: #fbf5ee;
+}

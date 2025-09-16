@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'GreatVibes';
+  src: url('./GreatVibes-Regular.ttf') format('truetype');
+  font-weight: 400; /* Regular weight */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Example usage for different weights */
+.great-vibes-text {
+  font-family: 'GreatVibes', cursive;
+  font-size: 24px; /* Adjust as needed */
+}
+
+/* Specific classes for available weight */
+.great-vibes-regular {
+  font-family: 'GreatVibes', cursive;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+/* Classes for other weights (uncomment and add corresponding font files when available) */
+/*
+.great-vibes-light {
+  font-family: 'GreatVibes', cursive;
+  font-weight: 300;
+  font-size: 24px;
+}
+
+.great-vibes-medium {
+  font-family: 'GreatVibes', cursive;
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.great-vibes-semibold {
+  font-family: 'GreatVibes', cursive;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.great-vibes-bold {
+  font-family: 'GreatVibes', cursive;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.great-vibes-extrabold {
+  font-family: 'GreatVibes', cursive;
+  font-weight: 800;
+  font-size: 24px;
+}
+
+.great-vibes-black {
+  font-family: 'GreatVibes', cursive;
+  font-weight: 900;
+  font-size: 24px;
+}
+*/
