@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+ <head>
+  <meta charset="utf-8">
+  <title>mix-blend-mode</title>
+  <style>
+   div {
+  
+    text-align: center; /* Выравнивание по центру */
+   }
+   .overlay{
+    top:20vh;
+    position: absolute;
+   }
+   div h1 {
+    font: bold 4em Verdana, Helvetica, sans-serif; /* Параметры шрифта */
+    margin: 0; /* Обнуляем */
+    background: #fff; /* Белый цвет фона */
+    mix-blend-mode: lighten; /* Режим наложения */
+   }
+  </style>
+ </head>
+ <body>
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" 
+    alt=""
+    style="width: 100vw; height: 100vh;position:absolute; 
+     top: 0; left: 0; z-index: -1;">
+  <div class="overlay">
+    <h1>Аквариум</h1>
+</div>
+ </body>
+</html>
