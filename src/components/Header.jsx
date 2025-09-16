@@ -1,3 +1,5 @@
+import './header.css';
+
 export function Header() {
   return (
     <div className='header fixed w-full px-4 z-[100]'>
@@ -17,7 +19,9 @@ export function Header() {
           </a>
         </div>
         <div className='grow flex justify-center text-center'>
-          <h1 className='font-[700] '>Доставляем быстро, поставляем надёжно</h1>
+          <h1 className='font-[400] italic text-[1.2rem] '>
+            Доставляем быстро, поставляем надёжно
+          </h1>
         </div>
         <div className='flex-1  font-[400] text-[1rem] flex gap-6 justify-end'>
           <a

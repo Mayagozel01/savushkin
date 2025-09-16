@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid'; // Heroicons
-import videoSrc from '../../assets/video/cheese-pizza-asthetic.mp4';
+import videoSrc from '../../assets/video/cheese-shop_medium.mp4';
 import bg_video from '../../assets/images/bg-video-section.jpg';
 import highlight from '../../assets/images/highlited.png';
+import './ourvision.css';
 
 const OurVision = () => {
   const videoRef = useRef(null);
@@ -43,18 +44,6 @@ const OurVision = () => {
           onError={() => setVideoError(true)}
           className='absolute inset-0 h-full w-full object-cover z-10'
         />
-
-        {/* highlight image */}
-        <img
-          src={highlight}
-          alt='Circle highlight around title'
-          aria-hidden='true'
-          className='absolute left-1/2 translate-x-[-50%] bottom-[-48px] w-[90%] 
-                         sm:bottom-[-40px] sm:w-[70%] 
-                         md:bottom-[-88px] md:w-[80%] 
-                         lg:bottom-[-64px] lg:w-[75%] 
-                         xl:bottom-[-88px]'
-        />
       </div>
 
       {/* play/pause control */}
@@ -75,22 +64,30 @@ const OurVision = () => {
       </button>
       <div className='absolute left-0 top-0 z-22 h-screen w-full bg-dough-500 mix-blend-lighten '>
         <div className='absolute left-0 top-0 z-22 flex h-screen w-full items-center justify-center'>
-          <h1 className='text-[6rem] px-[20rem] py-[5rem] font-bold h-full w-full flex flex-col justify-center items-center text-center mix-blend-lighten bg-[#fbf5ee]'>
+          <h1
+            className='
+    text-6xl sm:text-6xl md:text-6xl lg:text-6xl xl:text-[90px]
+    px-4 sm:px-8 md:px-16 lg:px-32 xl:px-32
+    py-10 sm:py-16 md:py-20 lg:py-22
+    font-bold w-full h-full 
+    flex flex-col  text-center 
+    mix-blend-lighten bg-[#fbf5ee] relative
+    justify-center items-center leading-12  '
+          >
             {' '}
-            Наше видение — вдохновлять клиентов, предлагая продукты, которые
-            приносят радость и уверенность
-            <img
-              src={highlight}
-              alt='Circle highlight around title'
-              aria-hidden='true'
-              className='absolute left-1/2 translate-x-[-50%] bottom-[-48px] w-[60%]  
-                         sm:bottom-[0] sm:w-[70%] 
-                         md:bottom-[5rem] md:w-[60%] 
-                         lg:bottom-[10rem] lg:w-[50%] 
-                         xl:bottom-[10rem]'
-            />
+            <span>Продукты для бизнеса. </span>
+            <span>Свежесть ежедневно. </span>
+            <span>Доверие всегда.</span>
           </h1>
         </div>
+        <img
+          src={highlight}
+          alt='Highlight under last line'
+          aria-hidden='true'
+          className='absolute left-[50%] block aspect-[2618/1004] max-w-none translate-x-[-50%] mix-blend-normal
+           bottom-[35%] w-[70%] sm:bottom-[30%]
+            sm:w-[70%] md:bottom-[30%] md:w-[80%] lg:bottom-[30%] lg:w-[50%] h-[15%] xl:bottom-[30%]'
+        />
       </div>
     </section>
   );
