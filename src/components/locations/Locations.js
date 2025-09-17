@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import './locations.css';
 import storage_ashgabat from '../../assets/images/storage_ashgabat.png';
 import storage_inside_1 from '../../assets/images/storage-inside.png';
-import location from '../../assets/images/location.jpg';
 import storage_inside_2 from '../../assets/images/storage_inside_2.jpg';
 const Locations = () => {
   // Sample images for the carousel - replace with your actual location images
@@ -107,7 +106,7 @@ const Locations = () => {
 
       {/* Content Section */}
       <div className='flex flex-col items-center justify-center pt-8 border-2 border-black w-1/2'>
-        <h2 className='font-great-vibes text-center text-6xl mb-10 text-yellow-500'>
+        <h2 className=' text-center text-6xl mb-10 text-yellow-500'>
           Our Locations
         </h2>
         <div className='p-8 w-full flex flex-col  gap-12'>

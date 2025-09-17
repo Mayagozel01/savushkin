@@ -7,10 +7,15 @@ const Footer = () => {
           <div className='flex-1'>
             <h3 className='font-bold text-lg mb-4 text-yellow-500'>Контакты</h3>
             <p className='mb-2'>
-              <strong>Телефон:</strong> +7 (999) 123-45-67
+              <strong>Телефон:</strong>{' '}
+              <a href='tel:+9931234567'>+993 23-45-67</a>
             </p>
             <p className='mb-2'>
-              <strong>Email:</strong> info@вашдистрибьютор.ru
+              <strong>Email:</strong>{' '}
+              <a href='mailto:info@вашдистрибьютор.ru'>
+                {' '}
+                info@вашдистрибьютор.ru
+              </a>
             </p>
             <p className='mb-2'>
               <strong>Адрес:</strong> г. Москва, ул. Примерная, 10

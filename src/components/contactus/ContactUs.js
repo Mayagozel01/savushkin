@@ -6,7 +6,7 @@ const ContactUs = () => {
   console.log(contactuspic); // For debugging; should log the image URL
 
   return (
-    <div className='flex flex-col md:flex-row  items-end min-h-screen w-full z-[11] bg-[#fbf5ee] px-4 sm:px-6 lg:px-8'>
+    <div className='flex flex-col md:flex-row  items-end min-h-screen w-full bg-[#fbf5ee] px-4 sm:px-6 lg:px-8'>
       <div className='flex flex-col md:flex-row hero-section h-[90vh] w-full bg-white'>
         <div
           className='h-[50vh] md:h-full border-2 border-black flex-1'

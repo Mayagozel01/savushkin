@@ -39,9 +39,9 @@ const CarouselGallery = () => {
           <div
             key={i}
             className='
-              flex-[0_0_65%] sm:flex-[0_0_45%] lg:flex-[0_0_30%] 
-              -mx-6 px-3
-            '
+    flex-[0_0_80%] sm:flex-[0_0_50%] md:flex-[0_0_40%] lg:flex-[0_0_25%] 
+    -mx-6 px-3
+  '
           >
             <div
               className='

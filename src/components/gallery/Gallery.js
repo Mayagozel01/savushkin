@@ -2,7 +2,7 @@ import CarouselGallery from '../carouselgallery/CarouselGallery';
 
 const Gallery = () => {
   return (
-    <div className='flex hero-section flex flex-col h-[100vh] w-full px-4 py-8 lg:py-16 '>
+    <div className='flex hero-section flex flex-col my-2 w-full px-4 py-8 lg:py-16  '>
       <div className='flex flex-col justify-center items-center transition-all duration-400  p-6 lg:p-16 xl:p-24 xxl:p-32'>
         <h2 className=' mb-4 transition-all duration-500 text-center rotate-[-2deg] text-5xl  mb-[-2rem] text-yellow-500'>
           Ваш надежный поставщик
