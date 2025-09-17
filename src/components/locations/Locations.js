@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import './locations.css';
-
+import storage_ashgabat from '../../assets/images/storage_ashgabat.png';
+import storage_inside_1 from '../../assets/images/storage-inside.png';
+import location from '../../assets/images/location.jpg';
+import storage_inside_2 from '../../assets/images/storage_inside_2.jpg';
 const Locations = () => {
   // Sample images for the carousel - replace with your actual location images
-  const locationImages = [
-    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600',
-    'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&q=80&w=600',
-    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=600',
-  ];
+  const locationImages = [storage_ashgabat, storage_inside_1, storage_inside_2];
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -111,8 +110,8 @@ const Locations = () => {
         <h2 className='font-great-vibes text-center text-6xl mb-10 text-yellow-500'>
           Our Locations
         </h2>
-        <div className='p-8 w-full flex flex-col gap-12'>
-          <div className='w-full gap-6 flex'>
+        <div className='p-8 w-full flex flex-col  gap-12'>
+          <div className='w-full gap-6 flex justify-evenly'>
             <div className='flex flex-col gap-4 w-[60%]'>
               <h1 className='text-5xl font-bold transition-all duration-700'>
                 Address
@@ -125,11 +124,15 @@ const Locations = () => {
               <h1 className='text-5xl font-bold transition-all duration-700'>
                 Phone
               </h1>
-              <p>+993 12 34 56 78</p>
-              <p>+993 12 34 56 78</p>
+              <p>
+                <a href='tel:+99312345678'>+993 12 34 56 78</a>
+              </p>
+              <p>
+                <a href='tel:+99312345678'>+993 12 34 56 78</a>
+              </p>
             </div>
           </div>
-          <div className='w-full gap-6 flex'>
+          <div className='w-full gap-6 flex justify-evenly'>
             <div className='flex flex-col gap-4 w-[60%]'>
               <h1 className='text-5xl font-bold transition-all duration-700'>
                 Address
@@ -142,8 +145,12 @@ const Locations = () => {
               <h1 className='text-5xl font-bold transition-all duration-700'>
                 Phone
               </h1>
-              <p>+993 12 34 56 78</p>
-              <p>+993 12 34 56 78</p>
+              <p>
+                <a href='tel:+99312345678'>+993 12 34 56 78</a>
+              </p>
+              <p>
+                <a href='tel:+99312345678'>+993 12 34 56 78</a>
+              </p>
             </div>
           </div>
         </div>

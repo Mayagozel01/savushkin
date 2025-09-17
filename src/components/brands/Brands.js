@@ -153,7 +153,7 @@ const Brands = () => {
 
   return (
     <section
-      className='py-16 sm:py-20'
+      className='p-16 h-[100vh] flex flex-col items-center justify-center'
       style={{
         background: 'radial-gradient(circle, #f6f4f1ff) 40%, #fef7efff) 100%)',
       }}

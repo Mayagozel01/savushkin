@@ -5,6 +5,8 @@ import ScrollInteractiveBlock from './components/ScrollInterActiveBlock.js/Scrol
 import Gallery from './components/gallery/Gallery';
 import OurVision from './components/ourvision/OurVision';
 import Brands from './components/brands/Brands';
+import ContactUs from './components/contactus/ContactUs';
+import Footer from './components/footer/Footer';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       <Brands />
       <OurVision />
       <Gallery />
+      <ContactUs />
+      <Footer />
     </div>
   );
 }
