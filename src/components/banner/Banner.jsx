@@ -102,7 +102,7 @@ const Banner = () => {
       >
         <Header />
         <div
-          className='text-container flex flex-col gap-[20px] text-center text-6xl font-bold absolute bottom-[22rem] z-[1] will-change-transform'
+          className='text-container flex flex-col gap-[20px] text-center  text-2xl lg:text-6xl md:text-4xl sm:text-2xl font-bold absolute bottom-[22rem] z-[1] will-change-transform'
           style={{
             maskImage:
               'linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 1) 60%, rgba(255, 255, 255, 0) 100%)',
@@ -153,7 +153,7 @@ const Banner = () => {
           </div>
         </div>
       </div>
-
+      hello
       {/* Первая Hero секция */}
       <div
         className='flex hero-section h-[90vh] w-full px-4 z-[10]  bg-[#fbf5ee] absolute top-[100vh] transition-all duration-600 ease-out'
@@ -164,10 +164,10 @@ const Banner = () => {
         }}
       >
         <div className='flex flex-col justify-center items-center border-2 border-black w-1/2 transition-all duration-400 bg-white p-6 lg:p-16 xl:p-24 xxl:p-32'>
-          <h2 className=' mb-4 transition-all duration-500 text-center rotate-[-2deg] text-5xl  mb-[-2rem] text-yellow-500'>
+          <h2 className=' mb-4 transition-all duration-500 text-center rotate-[-2deg] text-2xl lg:text-5xl md:text-4xl sm:text-2xl mb-[-2rem] text-yellow-500'>
             Ваш надежный поставщик
           </h2>
-          <h1 className='text-8xl font-bold text-center transition-all duration-700'>
+          <h1 className='text-4xl lg:text-8xl md:text-4xl sm:text-2xl font-bold text-center transition-all duration-700'>
             Лидер рынка
           </h1>
           <p className='mx-auto mt-6 max-w-lg text-center '>
@@ -180,7 +180,6 @@ const Banner = () => {
         </div>
         <div className='w-1/2 hero-bg h-full border-2 border-black border-l-0 transition-all duration-500'></div>
       </div>
-
       {/* Location секция */}
       <div
         className='flex location-section h-[90vh] w-full z-[11] bg-[#fbf5ee] px-4 absolute top-[190vh] transition-all duration-600 ease-out'
