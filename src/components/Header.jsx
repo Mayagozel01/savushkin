@@ -80,7 +80,7 @@ export function Header() {
           />
           <span
             className={`block h-[3px] w-full bg-black rounded transition-transform duration-300 ${
-              isOpen ? '-rotate-45 -translate-y-[9px]' : ''
+              isOpen ? '-rotate-45 ' : ''
             }`}
           />
         </button>
@@ -88,7 +88,7 @@ export function Header() {
 
       {/* Mobile menu */}
       <nav
-        className={`lg:hidden fixed top-[80px] left-0 w-full bg-white border-t border-gray-200 shadow-md transition-all duration-500 overflow-hidden ${
+        className={`lg:hidden fixed left-0 w-full bg-white border-t border-gray-200 shadow-md transition-all duration-500 overflow-hidden ${
           isOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >

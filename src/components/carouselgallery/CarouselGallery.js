@@ -39,7 +39,7 @@ const CarouselGallery = () => {
           <div
             key={i}
             className='
-    flex-[0_0_80%] sm:flex-[0_0_50%] md:flex-[0_0_40%] lg:flex-[0_0_25%] 
+    flex-[0_0_50%] sm:flex-[0_0_50%] md:flex-[0_0_40%] lg:flex-[0_0_25%] 
     -mx-6 px-3
   '
           >
@@ -52,7 +52,7 @@ const CarouselGallery = () => {
                 h-full flex flex-col
               '
             >
-              <div className='flex-1 relative min-h-[250px] sm:min-h-[300px] lg:min-h-[350px]'>
+              <div className='flex-1 relative min-h-[150px] sm:min-h-[300px] lg:min-h-[350px]'>
                 <img
                   src={src}
                   alt={`gallery-${i}`}

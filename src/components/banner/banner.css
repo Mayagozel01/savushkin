@@ -11,3 +11,40 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+
+.banner-element {
+  position: absolute;
+  bottom: 0;
+  height: 60dvh;       /* default height */
+  z-index: 3;
+  max-width: 600px;    /* default max-width */
+  transition: all 0.8s ease-out; /* duration-800 = 0.8s */
+}
+
+/* Small screens */
+@media (max-width: 640px) { /* sm */
+  .banner-element {
+    bottom: 0;
+    height: 60dvh;
+    max-width: 600px;
+  }
+}
+
+/* Medium screens */
+@media (min-width: 768px) and (max-width: 1023px) { /* md */
+  .banner-element {
+    bottom: -7rem;
+    height: 70dvh;
+    max-width: auto; /* w-max-auto */
+  }
+}
+
+/* Large screens */
+@media (min-width: 1024px) { /* lg */
+  .banner-element {
+    bottom: -14rem;
+    height: auto;
+    max-width: auto; /* w-max-auto */
+  }
+}
