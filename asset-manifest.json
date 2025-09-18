@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/savushkin/static/css/main.22f97bef.css",
-    "main.js": "/savushkin/static/js/main.bfa3708f.js",
+    "main.js": "/savushkin/static/js/main.1643027d.js",
     "static/js/453.433b03bd.chunk.js": "/savushkin/static/js/453.433b03bd.chunk.js",
     "static/media/cheese-shop_medium.mp4": "/savushkin/static/media/cheese-shop_medium.e54393a834f559e3ee82.mp4",
     "static/media/banner-image.png": "/savushkin/static/media/banner-image.4502bb003a3d3fe12881.png",
@@ -42,11 +42,11 @@
     "static/media/logo.svg": "/savushkin/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/savushkin/index.html",
     "main.22f97bef.css.map": "/savushkin/static/css/main.22f97bef.css.map",
-    "main.bfa3708f.js.map": "/savushkin/static/js/main.bfa3708f.js.map",
+    "main.1643027d.js.map": "/savushkin/static/js/main.1643027d.js.map",
     "453.433b03bd.chunk.js.map": "/savushkin/static/js/453.433b03bd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.22f97bef.css",
-    "static/js/main.bfa3708f.js"
+    "static/js/main.1643027d.js"
   ]
 }
