@@ -31,9 +31,9 @@ const Locations = () => {
   }, []);
 
   return (
-    <div className='flex hero-section h-[100vh] w-full bg-white'>
+    <div className='flex flex-col-reverse lg:flex-row md:flex-row sm:flex-col-reverse  hero-section  w-full bg-white'>
       {/* Carousel Section */}
-      <div className='w-1/2 h-full border-2 border-black border-r-0 relative overflow-hidden'>
+      <div className='w-full lg:w-1/2 md:w-1/2 sm:w-full h-full border-2 border-black border-r-0 relative overflow-hidden'>
         <div
           className='flex h-full transition-transform duration-500 ease-in-out'
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -105,7 +105,7 @@ const Locations = () => {
       </div>
 
       {/* Content Section */}
-      <div className='flex flex-col items-center justify-center pt-8 border-2 border-black w-1/2'>
+      <div className='flex flex-col items-center justify-center pt-8 border-2 border-black w-full lg:w-1/2 md:w-1/2 sm:w-full h-full'>
         <h2 className=' text-center text-6xl mb-10 text-yellow-500'>
           Our Locations
         </h2>

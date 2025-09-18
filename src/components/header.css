@@ -6,3 +6,15 @@
     .header a:hover{
         color: black!important;
     }
+    .header-animate {
+  transform: translateY(-100px);
+  opacity: 0;
+  animation: dropDown 0.8s ease-out forwards;
+}
+
+@keyframes dropDown {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
