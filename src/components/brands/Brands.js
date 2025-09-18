@@ -174,7 +174,7 @@ const Brands = () => {
         >
           <div
             key='center-text'
-            className='flex justify-center items-center'
+            className='flex flex-col justify-center items-center  gap-2'
             style={{
               gridColumn: `${textCellsStartCol + 1} / ${textCellsEndCol + 2}`,
               gridRow: `${textCellsStartRow + 1} / ${textCellsEndRow + 2}`,
@@ -182,15 +182,12 @@ const Brands = () => {
               pointerEvents: 'auto',
             }}
           >
-            <h2
-              className='text-center font-bold'
-              style={{
-                fontSize: '1.875rem',
-                color: '#6b6b6b',
-              }}
-            >
-              Наши партнеры
+            <h2 className=' mb-4 transition-all duration-500 text-center rotate-[-2deg] text-3xl lg:text-5xl md:text-4xl sm:text-3xl mb-[-2rem] text-yellow-500 font-great-vibes'>
+              Ваш надежный поставщик
             </h2>
+            <h1 className='text:5xl lg:text-7xl md:text-6xl sm:text-5xl font-bold text-center transition-all duration-700'>
+              Лидер рынка
+            </h1>
           </div>
           {gridCells}
         </div>
