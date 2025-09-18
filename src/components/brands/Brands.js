@@ -28,6 +28,7 @@ const logos = [
 const TOTAL_COLUMNS = 12;
 const TOTAL_ROWS = 6;
 const TOTAL_CELLS = TOTAL_COLUMNS * TOTAL_ROWS;
+const logoPositions = [1, 25, 4, 11, 27, 28, 50, 57];
 
 const Brands = () => {
   const containerRef = useRef(null);
@@ -45,23 +46,18 @@ const Brands = () => {
       const offsetX = (col - centerCol) * 15;
       const offsetY = (row - centerRow) * 15;
 
-      const scaleStart = 0.8;
-      const opacityStart = 0.6;
-
       gsap.fromTo(
         el,
         {
           x: offsetX,
           y: offsetY,
-          z: 0,
-          scale: scaleStart,
-          opacity: opacityStart,
+          scale: 0.8,
+          opacity: 0.6,
           filter: 'blur(4px)',
         },
         {
           x: 0,
           y: 0,
-          z: 0,
           scale: 1.3,
           opacity: 1,
           filter: 'blur(0px)',
@@ -80,8 +76,6 @@ const Brands = () => {
   const textCellsEndRow = 3;
   const textCellsStartCol = 3;
   const textCellsEndCol = 8;
-
-  const logoPositions = [1, 25, 4, 11, 27, 28, 50, 57];
 
   const isInTextBlock = index => {
     const row = Math.floor(index / TOTAL_COLUMNS);
@@ -136,47 +130,44 @@ const Brands = () => {
 
   return (
     <section
-      className='py-12 md:py-20 lg:py-28 flex flex-col lg:h-[100dvh] h-[50dvh] md:h-[100dvh] sm:h-[50dvh] items-center justify-center '
+      className='py-12 md:py-20 lg:py-28 flex flex-col min-h-screen items-center justify-center'
       style={{
-        background: 'radial-gradient(circle, #f6f4f1ff) 40%, #fef7efff) 100%)',
+        background: 'radial-gradient(circle, #f6f4f1 40%, #fef7ef 100%)',
       }}
     >
-      <div className='w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 '>
-        {/* ОБЕРТКА С pointer-events: none */}
-        <div style={{ pointerEvents: 'none' }}>
+      <div className='w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <div
+          ref={containerRef}
+          className='integrations-grid grid gap-2 sm:gap-3 md:gap-4'
+          style={{
+            gridTemplateColumns: `repeat(${TOTAL_COLUMNS}, 1fr)`,
+            gridTemplateRows: `repeat(${TOTAL_ROWS}, 1fr)`,
+            perspective: '2500px',
+            transformStyle: 'preserve-3d',
+            width: '100%',
+            maxWidth: '1000px',
+            margin: '0 auto',
+          }}
+        >
           <div
-            ref={containerRef}
-            className='integrations-grid grid gap-2 sm:gap-3 md:gap-4'
+            key='center-text'
+            className='flex flex-col justify-center items-center gap-1 md:gap-2'
             style={{
-              gridTemplateColumns: `repeat(${TOTAL_COLUMNS}, 1fr)`,
-              gridTemplateRows: `repeat(${TOTAL_ROWS}, 1fr)`,
-              perspective: '2500px',
-              transformStyle: 'preserve-3d',
-              width: '100%',
-              maxWidth: '1000px',
-              margin: '0 auto',
+              gridColumn: `${textCellsStartCol + 1} / ${textCellsEndCol + 2}`,
+              gridRow: `${textCellsStartRow + 1} / ${textCellsEndRow + 2}`,
+              backgroundColor: 'transparent',
+              pointerEvents: 'auto',
+              aspectRatio: '6/1',
             }}
           >
-            <div
-              key='center-text'
-              className='flex flex-col justify-center items-center gap-1 md:gap-2'
-              style={{
-                gridColumn: `${textCellsStartCol + 1} / ${textCellsEndCol + 2}`,
-                gridRow: `${textCellsStartRow + 1} / ${textCellsEndRow + 2}`,
-                backgroundColor: 'transparent',
-                pointerEvents: 'auto', // Текстовый блок получает события
-                aspectRatio: '6/1',
-              }}
-            >
-              <h2 className='mb-1 md:mb-2 transition-all duration-500 text-center rotate-[-2deg] text-lg sm:text-xl md:text-2xl lg:text-3xl text-yellow-500 font-great-vibes'>
-                Ваш надежный поставщик
-              </h2>
-              <h1 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center transition-all duration-700'>
-                Лидер рынка
-              </h1>
-            </div>
-            {gridCells}
+            <h2 className='mb-1 md:mb-2 transition-all duration-500 text-center rotate-[-2deg] text-lg sm:text-xl md:text-2xl lg:text-3xl text-yellow-500 font-great-vibes'>
+              Ваш надежный поставщик
+            </h2>
+            <h1 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center transition-all duration-700'>
+              Лидер рынка
+            </h1>
           </div>
+          {gridCells}
         </div>
       </div>
     </section>

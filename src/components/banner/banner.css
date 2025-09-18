@@ -13,38 +13,39 @@
 }
 
 
-.banner-element {
+
+
+/* banner.css */
+
+.banner-animate {
   position: absolute;
-  bottom: 0;
-  height: 60dvh;       /* default height */
-  z-index: 3;
-  max-width: 600px;    /* default max-width */
-  transition: all 0.8s ease-out; /* duration-800 = 0.8s */
+  bottom: 0; /* конечная позиция */
+  opacity: 0;
+  transform: translateY(-120px); /* старт выше */
+  animation: dropBanner 1.2s ease-out forwards;
+  animation-delay: 0.6s;
 }
 
-/* Small screens */
-@media (max-width: 640px) { /* sm */
-  .banner-element {
-    bottom: 0;
-    height: 60dvh;
-    max-width: 600px;
+@keyframes dropBanner {
+  0% {
+    transform: translateY(-120px);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 
-/* Medium screens */
-@media (min-width: 768px) and (max-width: 1023px) { /* md */
-  .banner-element {
-    bottom: -7rem;
-    height: 70dvh;
-    max-width: auto; /* w-max-auto */
-  }
+.text-animate {
+  transform: translateY(40px); /* старт чуть ниже */
+  animation: riseText 1s ease-out forwards;
+  animation-delay:0.6s; /* чуть позже чем картинка */
 }
 
-/* Large screens */
-@media (min-width: 1024px) { /* lg */
-  .banner-element {
-    bottom: -14rem;
-    height: auto;
-    max-width: auto; /* w-max-auto */
+@keyframes riseText {
+  0% {
+    transform: translateY(40px);
+  }
+  100% {
+    transform: translateY(-10px);
   }
 }

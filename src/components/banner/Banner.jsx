@@ -18,7 +18,7 @@ const Banner = () => {
   const maxScroll = 200;
   const heroScrollRange = 200;
   const locationScrollRange = 200;
-  const scrollStep = 10;
+  const scrollStep = 20;
 
   // Обновляем ширину окна для адаптивности
   useEffect(() => {
@@ -43,34 +43,20 @@ const Banner = () => {
     let scrollTimeout;
 
     const handleWheel = event => {
-      // Если баннер завершен и скроллим вниз, разрешаем обычный скролл
-      if (isBannerFinished && event.deltaY > 0) {
+      const isAtEnd = currentScroll >= maxTotalScroll;
+
+      if (event.deltaY > 0 && isAtEnd) {
+        // разрешаем стандартный скролл вниз
         return;
       }
 
-      // Если скроллим вверх и есть скролл в баннере, обрабатываем его
-      if (event.deltaY < 0 && currentScroll > 0) {
+      if (!isAtEnd || (event.deltaY < 0 && currentScroll > 0)) {
         event.preventDefault();
         const adjustedDelta = Math.sign(event.deltaY) * scrollStep;
 
-        setCurrentScroll(prev => {
-          return Math.min(Math.max(prev + adjustedDelta, 0), maxTotalScroll);
-        });
-
-        setIsScrolling(true);
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => setIsScrolling(false), 100);
-        return;
-      }
-
-      // Если баннер не завершен, обрабатываем скролл
-      if (!isBannerFinished) {
-        event.preventDefault();
-        const adjustedDelta = Math.sign(event.deltaY) * scrollStep;
-
-        setCurrentScroll(prev => {
-          return Math.min(Math.max(prev + adjustedDelta, 0), maxTotalScroll);
-        });
+        setCurrentScroll(prev =>
+          Math.min(Math.max(prev + adjustedDelta, 0), maxTotalScroll)
+        );
 
         setIsScrolling(true);
         clearTimeout(scrollTimeout);
@@ -88,7 +74,9 @@ const Banner = () => {
       clearTimeout(scrollTimeout);
     };
   }, [isBannerFinished, currentScroll, maxTotalScroll]);
-
+  useEffect(() => {
+    setIsBannerFinished(currentScroll >= maxTotalScroll);
+  }, [currentScroll, maxTotalScroll]);
   // Разрешаем скролл страницы только когда баннер завершен и скроллим вниз
   useEffect(() => {
     if (isBannerFinished) {
@@ -159,12 +147,11 @@ const Banner = () => {
   const imageHeight = isMobile ? '100vh' : isTablet ? '80vh' : 'auto';
 
   return (
-    <div ref={bannerRef} className='relative w-full overflow-hidden'>
+    <div ref={bannerRef} className='relative w-full overflow-hidden h-[100vh]'>
       {/* Основной баннер */}
       <div
-        className='relative w-full flex flex-col items-center justify-start bg-cover bg-center'
+        className='relative w-full h-full flex flex-col items-center justify-start bg-cover bg-center'
         style={{
-          height: vh,
           backgroundImage: `url(${backgroundImg})`,
         }}
       >
@@ -172,7 +159,7 @@ const Banner = () => {
 
         <div
           className='text-container flex flex-col text-8xl lg:text-6xl md:text-4xl sm:text-8xl
-           gap-2 lg:gap-4 md:gap-2 sm:gap-2 text-center font-bold absolute z-[1]'
+           gap-2 lg:gap-4 md:gap-2 sm:gap-2 text-center font-bold absolute z-[1] text-animate'
           style={{
             bottom: textBottom,
             maskImage:
@@ -189,7 +176,7 @@ const Banner = () => {
           ref={bannerImageRef}
           src={banner_img}
           alt='Banner'
-          className='absolute z-[3] transition-all duration-800 ease-out object-cover w-full'
+          className='absolute z-[3] transition-all duration-800 ease-out object-cover w-full banner-animate'
           style={{
             bottom: 0,
             width: '100%',

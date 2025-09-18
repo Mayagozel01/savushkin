@@ -4,8 +4,7 @@ const Gallery = () => {
   return (
     <div
       className='flex hero-section flex-col my-2 justify-center w-full px-4 py-8 lg:py-16 h-[80dvh] lg:h-[130dvh] md:h-[100dvh] 
-    sm:h-[80vh]
-    border-2'
+    sm:h-[80vh]'
     >
       <div className='flex flex-col justify-center items-center transition-all duration-400  p-6 lg:p-16 xl:p-24 xxl:p-32'>
         <h2 className=' mb-4 transition-all duration-500 text-center rotate-[-2deg] text-5xl  mb-[-2rem] text-yellow-500'>

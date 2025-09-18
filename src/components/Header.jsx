@@ -12,7 +12,7 @@ export function Header() {
   ];
 
   return (
-    <header className='fixed w-full z-[100] px-4'>
+    <header className='fixed w-full z-[100] px-4 header-animate'>
       {/* Desktop header */}
       <div className='hidden lg:flex h-[60px] items-center justify-between px-6 w-full bg-white border-2 border-gray-200 rounded-md capitalize py-[2rem]'>
         <div className='flex-1 font-[400] text-[1rem] flex gap-4'>
