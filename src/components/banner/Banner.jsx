@@ -14,6 +14,11 @@ const Banner = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isBannerFinished, setIsBannerFinished] = useState(false);
+  const [touchDebug, setTouchDebug] = useState({
+    startY: 0,
+    currentY: 0,
+    delta: 0,
+  });
 
   const maxScroll = 200;
   const heroScrollRange = 200;
@@ -41,14 +46,12 @@ const Banner = () => {
   // Скролл колесом
   useEffect(() => {
     let scrollTimeout;
+    let touchStart = 0;
 
     const handleWheel = event => {
       const isAtEnd = currentScroll >= maxTotalScroll;
 
-      if (event.deltaY > 0 && isAtEnd) {
-        // разрешаем стандартный скролл вниз
-        return;
-      }
+      if (event.deltaY > 0 && isAtEnd) return;
 
       if (!isAtEnd || (event.deltaY < 0 && currentScroll > 0)) {
         event.preventDefault();
@@ -64,23 +67,55 @@ const Banner = () => {
       }
     };
 
+    const startTouch = event => {
+      const y = event.touches[0].clientY;
+      setTouchDebug(prev => ({ ...prev, startY: y, currentY: y, delta: 0 }));
+    };
+
+    const handleTouchMove = event => {
+      const currentY = event.touches[0].clientY;
+      const delta = touchDebug.currentY - currentY; // движение вниз/вверх
+      setTouchDebug(prev => ({ ...prev, currentY, delta }));
+
+      if (Math.abs(delta) > 2) {
+        setCurrentScroll(prev =>
+          Math.max(0, Math.min(prev + delta, maxTotalScroll))
+        );
+        setIsScrolling(true);
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => setIsScrolling(false), 100);
+      }
+    };
+
     const blockElement = bannerRef.current;
     if (blockElement) {
       blockElement.addEventListener('wheel', handleWheel, { passive: false });
+      blockElement.addEventListener('touchstart', startTouch, {
+        passive: false,
+      });
+      blockElement.addEventListener('touchmove', handleTouchMove, {
+        passive: false,
+      });
     }
 
     return () => {
-      if (blockElement) blockElement.removeEventListener('wheel', handleWheel);
+      if (blockElement) {
+        blockElement.removeEventListener('wheel', handleWheel);
+        blockElement.removeEventListener('touchstart', startTouch);
+        blockElement.removeEventListener('touchmove', handleTouchMove);
+      }
       clearTimeout(scrollTimeout);
     };
-  }, [isBannerFinished, currentScroll, maxTotalScroll]);
+  }, [currentScroll, maxTotalScroll]);
+
   useEffect(() => {
     setIsBannerFinished(currentScroll >= maxTotalScroll);
   }, [currentScroll, maxTotalScroll]);
+
   // Разрешаем скролл страницы только когда баннер завершен и скроллим вниз
   useEffect(() => {
-    if (isBannerFinished) {
-      // Разрешаем скролл только если пытаемся скроллить вниз
+    if (isBannerFinished || window.innerWidth < 768) {
+      // Allow scroll only on mobile
       document.body.style.overflow = 'auto';
     } else {
       document.body.style.overflow = 'hidden';
@@ -244,6 +279,47 @@ const Banner = () => {
         }}
       >
         <Locations />
+      </div>
+      {/* Панель отладки */}
+      <div className='fixed top-4 right-4 z-[9999] bg-white/90 text-gray-900 text-sm shadow-lg rounded-xl p-4 border border-gray-300 backdrop-blur-md'>
+        <h3 className='font-bold text-xs mb-2 text-gray-700 uppercase'>
+          Debug Panel
+        </h3>
+        <div className='space-y-1 font-mono text-xs'>
+          <div>
+            <span className='font-bold'>scroll:</span> {currentScroll}
+          </div>
+          <div>
+            <span className='font-bold'>banner:</span>{' '}
+            {bannerProgress.toFixed(2)}
+          </div>
+          <div>
+            <span className='font-bold'>hero:</span> {heroProgress.toFixed(2)}
+          </div>
+          <div>
+            <span className='font-bold'>location:</span>{' '}
+            {locationProgress.toFixed(2)}
+          </div>
+          <div>
+            <span className='font-bold'>finished:</span>{' '}
+            {isBannerFinished ? '✅' : '❌'}
+          </div>
+          <div>
+            <span className='font-bold'>isScrolling:</span>{' '}
+            {isScrolling ? '🌀' : '—'}
+          </div>
+          {/* touch debug */}
+          <div className='mt-2 border-t pt-2 text-gray-600'>Touch Debug</div>
+          <div>
+            <span className='font-bold'>startY:</span> {touchDebug.startY}
+          </div>
+          <div>
+            <span className='font-bold'>currentY:</span> {touchDebug.currentY}
+          </div>
+          <div>
+            <span className='font-bold'>delta:</span> {touchDebug.delta}
+          </div>
+        </div>
       </div>
     </div>
   );
