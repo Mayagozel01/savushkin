@@ -14,10 +14,19 @@ const Banner = () => {
   const [isScrolling, setIsScrolling] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isBannerFinished, setIsBannerFinished] = useState(false);
+  const [isBannerFullyVisible, setIsBannerFullyVisible] = useState(false);
   const [touchDebug, setTouchDebug] = useState({
     startY: 0,
     currentY: 0,
     delta: 0,
+  });
+
+  // rectangle / observer info для debug
+  const [bannerRect, setBannerRect] = useState({
+    height: 0,
+    top: 0,
+    bottom: 0,
+    ratio: 0,
   });
 
   const maxScroll = 200;
@@ -25,7 +34,7 @@ const Banner = () => {
   const locationScrollRange = 200;
   const scrollStep = 20;
 
-  // Обновляем ширину окна для адаптивности
+  // Update window width (and so vh changes indirectly)
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
@@ -43,12 +52,88 @@ const Banner = () => {
     setIsBannerFinished(currentScroll >= maxTotalScroll);
   }, [currentScroll, maxTotalScroll]);
 
-  // Скролл колесом
+  // IntersectionObserver + tolerant rect check для надёжной проверки "баннер полностью отображён"
+  useEffect(() => {
+    const el = bannerRef.current;
+    if (!el) return;
+
+    // пороги для observer (частичная информативность)
+    const thresholds = [0, 0.25, 0.5, 0.75, 0.9, 0.99, 1];
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const entry = entries[0];
+        if (!entry) return;
+
+        const rect = entry.boundingClientRect;
+        const ratio = entry.intersectionRatio;
+
+        const height = rect.height;
+        const top = rect.top;
+        const bottom = rect.bottom;
+
+        // Обновляем данные для отладки
+        setBannerRect({
+          height,
+          top,
+          bottom,
+          ratio,
+        });
+
+        // вычисляем допуски (tolerance) — устойчиво к мобильным address-bar и пиксельным погрешностям
+        const vhLocal = window.innerHeight;
+        const heightTolerance = Math.max(8, Math.round(vhLocal * 0.02)); // min 8px or 2% VH
+        const posTolerance = Math.max(4, Math.round(vhLocal * 0.01)); // min 4px or 1% VH
+
+        // Два способа признать "полностью видимым":
+        // 1) Intersection ratio почти 1 (наиболее прямой)
+        const fullyByRatio = ratio >= 0.99;
+        // 2) Высота баннера близка к VH и top≈0 и bottom≈vh (учитываем допуски)
+        const fullyByRect =
+          height >= vhLocal - heightTolerance &&
+          Math.abs(top) <= posTolerance &&
+          Math.abs(bottom - vhLocal) <= posTolerance;
+
+        setIsBannerFullyVisible(fullyByRatio || fullyByRect);
+      },
+      {
+        threshold: thresholds,
+        // root: null (viewport) — по умолчанию
+      }
+    );
+
+    observer.observe(el);
+
+    // на ресайз нужно обновлять прямые rect-значения (быстрая корректировка)
+    const handleResize = () => {
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      setBannerRect(prev => ({
+        ...prev,
+        height: r.height,
+        top: r.top,
+        bottom: r.bottom,
+      }));
+      // также можно пересчитать isBannerFullyVisible через тот же алгоритм, но observer сработает сам soon.
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []); // пустой deps: создаём один observer на монтирование
+
+  // Скролл колесом и тач
   useEffect(() => {
     let scrollTimeout;
-    let touchStart = 0;
 
     const handleWheel = event => {
+      if (!isBannerFullyVisible) {
+        // баннер не полностью в экране — пропускаем скролл дальше
+        return;
+      }
+
       const isAtEnd = currentScroll >= maxTotalScroll;
 
       if (event.deltaY > 0 && isAtEnd) return;
@@ -68,13 +153,17 @@ const Banner = () => {
     };
 
     const startTouch = event => {
+      if (!isBannerFullyVisible) return; // не блокируем touch, если баннер не на весь экран
+
       const y = event.touches[0].clientY;
       setTouchDebug(prev => ({ ...prev, startY: y, currentY: y, delta: 0 }));
     };
 
     const handleTouchMove = event => {
+      if (!isBannerFullyVisible) return; // пропускаем стандартный скролл
+
       const currentY = event.touches[0].clientY;
-      const delta = touchDebug.currentY - currentY; // движение вниз/вверх
+      const delta = touchDebug.currentY - currentY;
       setTouchDebug(prev => ({ ...prev, currentY, delta }));
 
       if (Math.abs(delta) > 2) {
@@ -106,26 +195,22 @@ const Banner = () => {
       }
       clearTimeout(scrollTimeout);
     };
-  }, [currentScroll, maxTotalScroll]);
+  }, [currentScroll, maxTotalScroll, touchDebug, isBannerFullyVisible]);
 
+  // Блокируем скролл документа только если баннер реально 100vh (fullyVisible) и ещё не закончен, и не mobile
   useEffect(() => {
-    setIsBannerFinished(currentScroll >= maxTotalScroll);
-  }, [currentScroll, maxTotalScroll]);
-
-  // Разрешаем скролл страницы только когда баннер завершен и скроллим вниз
-  useEffect(() => {
-    if (isBannerFinished || window.innerWidth < 768) {
-      // Allow scroll only on mobile
-      document.body.style.overflow = 'auto';
-    } else {
+    if (isBannerFullyVisible && !isBannerFinished && windowWidth >= 768) {
       document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
     }
 
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [isBannerFinished]);
+  }, [isBannerFullyVisible, isBannerFinished, windowWidth]);
 
+  // вычисления прогрессов/переводов (без изменений)
   const bannerProgress = Math.min(1, currentScroll / maxScroll);
   const heroOffset = Math.max(0, currentScroll - maxScroll);
   const heroProgress = Math.min(1, heroOffset / heroScrollRange);
@@ -175,11 +260,12 @@ const Banner = () => {
     [bannerProgress, heroProgress, locationProgress, textTranslateMultiplier]
   );
 
-  // Адаптивный bottom для текста
   const textBottom = isMobile ? '30%' : isTablet ? '25%' : '20%';
-
-  // Адаптивная высота картинки
   const imageHeight = isMobile ? '100vh' : isTablet ? '80vh' : 'auto';
+
+  // debug tolerances (тот же расчёт, что внутри observer)
+  const heightTolerance = Math.max(8, Math.round(vh * 0.02));
+  const posTolerance = Math.max(4, Math.round(vh * 0.01));
 
   return (
     <div ref={bannerRef} className='relative w-full overflow-hidden h-[100vh]'>
@@ -280,8 +366,9 @@ const Banner = () => {
       >
         <Locations />
       </div>
+
       {/* Панель отладки */}
-      <div className='fixed top-4 right-4 z-[9999] bg-white/90 text-gray-900 text-sm shadow-lg rounded-xl p-4 border border-gray-300 backdrop-blur-md'>
+      <div className='fixed top-4 right-4 z-[9999] bg-white/90 text-gray-900 text-sm shadow-lg rounded-xl p-4 border border-gray-300 backdrop-blur-md max-w-xs'>
         <h3 className='font-bold text-xs mb-2 text-gray-700 uppercase'>
           Debug Panel
         </h3>
@@ -308,7 +395,40 @@ const Banner = () => {
             <span className='font-bold'>isScrolling:</span>{' '}
             {isScrolling ? '🌀' : '—'}
           </div>
-          {/* touch debug */}
+
+          <div className='mt-2 border-t pt-2 text-gray-600'>
+            Banner Visibility
+          </div>
+          <div>
+            <span className='font-bold'>fullyVisible:</span>{' '}
+            {isBannerFullyVisible ? '✅' : '❌'}
+          </div>
+          <div>
+            <span className='font-bold'>vh:</span> {vh}
+          </div>
+          <div>
+            <span className='font-bold'>bannerHeight:</span>{' '}
+            {Math.round(bannerRect.height)}
+          </div>
+          <div>
+            <span className='font-bold'>bannerTop:</span>{' '}
+            {Math.round(bannerRect.top)}
+          </div>
+          <div>
+            <span className='font-bold'>bannerBottom:</span>{' '}
+            {Math.round(bannerRect.bottom)}
+          </div>
+          <div>
+            <span className='font-bold'>intersectionRatio:</span>{' '}
+            {bannerRect.ratio.toFixed(2)}
+          </div>
+          <div>
+            <span className='font-bold'>heightTol(px):</span> {heightTolerance}
+          </div>
+          <div>
+            <span className='font-bold'>posTol(px):</span> {posTolerance}
+          </div>
+
           <div className='mt-2 border-t pt-2 text-gray-600'>Touch Debug</div>
           <div>
             <span className='font-bold'>startY:</span> {touchDebug.startY}
